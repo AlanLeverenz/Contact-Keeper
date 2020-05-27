@@ -44,6 +44,7 @@ router.post(
       });
 
       // await promises being returned
+      // hash the user's password
       const salt = await bcrypt.genSalt(10);
 
       user.password = await bcrypt.hash(password, salt);
@@ -55,7 +56,7 @@ router.post(
           id: user.id,
         },
       };
-      // JSON Web Token, option: expires in seconds, callback to get token
+      // JSON Web Token, applied to payload, option: expires in seconds, callback to get token
       jwt.sign(
         payload,
         config.get('jwtSecret'),

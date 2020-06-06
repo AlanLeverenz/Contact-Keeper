@@ -3,7 +3,6 @@ import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import setAuthToken from '../../utils/setAuthToken';
-
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -24,15 +23,11 @@ const AuthState = (props) => {
     error: null,
   };
 
-  // access state, dispatch objects to the Reducer
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Load User
-  const loadUser = () => async () => {
-    // @todo = load token into global headers
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
+  const loadUser = async () => {
+    setAuthToken(localStorage.token);
 
     try {
       const res = await axios.get('/api/auth');
@@ -97,7 +92,7 @@ const AuthState = (props) => {
   };
 
   // Logout
-  const logout = () => console.log('logout');
+  const logout = () => dispatch({ type: LOGOUT });
 
   // Clear Errors
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
